@@ -25,6 +25,9 @@ app.get("/api/hello", function (req, res) {
 });
 
 
+// Router for timestamp
+const apiRouter = require("./routes/router");
+app.use("/api", apiRouter);
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
