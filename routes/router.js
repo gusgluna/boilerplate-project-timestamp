@@ -10,10 +10,11 @@ router.get("/", (req, res)=>{
 })
 
 router.get("/:date", (req, res)=>{
-  let date = req.params.date;
-  const validDate = (/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/).test(date) || (/^\d*$/).test(date);
+  const date = req.params.date;
+  const validatedDate = (date == Number(date).toString()) ? Number(date) : date;
+  const validDate = (new Date(validatedDate) != "Invalid Date");
   if(!validDate) return res.json({"error" : "Invalid Date"});
-  const dateResponse = (date == Number(date).toString()) ? new Date(Number(date)) : new Date(date);
+  const dateResponse = new Date(validatedDate);
   return res.json({
       "unix": dateResponse.getTime(),
       "utc": dateResponse.toUTCString()
